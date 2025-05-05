@@ -1,6 +1,8 @@
 #include <windows.h>
 #include <iostream>
 #include "./src/utils/azureSpeechPlayer/AzureSpeechPlayer.h"
+#include "./src/utils/azureTranslator/AzureTranslator.h"
+#include "./src/utils/textSanatizer/TextSanitizer.h"
 #include "./src/ui/deprecatedMainMenu/DeprecatedMainMenu.h"
 #include "./src/enums/SupportedLanguages.h"
 
@@ -9,9 +11,15 @@ using namespace std;
 int main()
 {
     try {
+        AzureTranslator translator;
         AzureSpeechPlayer player;
-        player.speakText("Hola mundo, ¡este es un ejemplo! ¿Detecta esto si estoy haciendo una pregunta?", SupportedLanguages::Spanish);
-        player.speakText("Hello World! This is an example. Can this speak with entonation?", SupportedLanguages::English);
+        std::string baseText = "Hola mundo ¡este es un ejemplo! ¿Detecta esto si estoy haciendo una pregunta?";
+        std::string safeText = TextSanitizer::sanitizeToUtf8(baseText);
+        std::string translatedText = translator.translate(safeText, SupportedLanguages::English);
+
+        player.speakText(baseText, SupportedLanguages::Spanish);
+        player.speakText(translatedText, SupportedLanguages::English);
+
     }
     catch (const std::exception& ex) {
         std::cerr << "Error: " << ex.what() << std::endl;

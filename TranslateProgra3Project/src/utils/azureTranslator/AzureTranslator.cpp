@@ -31,11 +31,9 @@ std::string AzureTranslator::buildRequestBody(const std::string& text) {
 }
 
 std::string AzureTranslator::buildTargetLanguageCode(SupportedLanguages lang) {
-    // Reutiliza tu función getLanguageCode(lang)
     return getLanguageCode(lang);
 }
 
-// Callback para capturar la respuesta de curl
 static size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* output) {
     size_t totalSize = size * nmemb;
     output->append((char*)contents, totalSize);
