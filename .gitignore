@@ -1,0 +1,77 @@
+# Compiled object files
+*.obj
+*.o
+*.lo
+*.slo
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.dll
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lib
+*.a
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Debug and Release folders
+[Bb]in/
+[Oo]bj/
+x64/
+x86/
+
+# Build results
+*.log
+*.tlog
+*.vcxproj.user
+*.vcxproj.filters
+*.ipch
+*.opensdf
+*.sdf
+*.cache
+*.db
+*.pdb
+*.idb
+
+# CMake-related (if ever used again)
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+CMakeSettings.json
+
+# Visual Studio files
+.vscode/
+.vs/
+*.VC.db
+*.VC.opendb
+
+# Test data folder
+data/
+
+# NuGet
+packages/
+*.nupkg
+project.lock.json
+project.assets.json
+
+# Windows crash dumps
+*.mdmp
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Others
+*.recipe
+.env
