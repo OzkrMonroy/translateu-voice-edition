@@ -20,12 +20,17 @@ void AzureSpeechPlayer::speakFromConsoleInput() {
     std::string text;
     std::getline(std::cin, text);
 
-    speakText(text);
+    speakText(text, SupportedLanguages::English);
 }
 
-void AzureSpeechPlayer::speakText(const std::string& text) {
+void AzureSpeechPlayer::speakText(const std::string& text, SupportedLanguages lang) {
     auto synthesizer = SpeechSynthesizer::FromConfig(speechConfig);
-    auto result = synthesizer->SpeakTextAsync(text).get();
+    
+    std::string language = getLanguageCode(lang);
+    std::string voiceByLanguage = getDefaultVoice(lang);
+
+    std::string ssml = SSMLBuilder::buildSSML(language, voiceByLanguage, text);
+    auto result = synthesizer->SpeakSsmlAsync(ssml).get();
 
     if (result->Reason == ResultReason::SynthesizingAudioCompleted) {
         std::cout << "Speech synthesized to speaker for text [" << text << "]" << std::endl;
