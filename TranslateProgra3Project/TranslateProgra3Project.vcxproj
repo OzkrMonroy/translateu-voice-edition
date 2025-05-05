@@ -133,17 +133,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\controllers\deprecatedManager\TranslateManager.cpp" />
+    <ClCompile Include="src\enums\SupportedLanguages.cpp" />
     <ClCompile Include="src\models\avlTree\DictionaryAVLTree.cpp" />
     <ClCompile Include="src\ui\auth\userOptions\UserOptionsUI.cpp" />
     <ClCompile Include="src\ui\deprecatedMainMenu\DeprecatedMainMenu.cpp" />
     <ClCompile Include="src\ui\welcomeUI\WelcomeUI.cpp" />
     <ClCompile Include="src\utils\azureSpeechPlayer\AzureSpeechPlayer.cpp" />
     <ClCompile Include="src\utils\envLoader\EnvLoader.cpp" />
+    <ClCompile Include="src\utils\ssmlBuilder\SSMLBuilder.cpp" />
     <ClCompile Include="src\utils\translationFileHandler\TranslationFileHandler.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\controllers\deprecatedManager\TranslateManager.h" />
+    <ClInclude Include="src\enums\SupportedLanguages.h" />
     <ClInclude Include="src\models\avlTree\DictionaryAVLTree.h" />
     <ClInclude Include="src\models\structs\AVLNode.h" />
     <ClInclude Include="src\models\structs\WordTranslations.h" />
@@ -152,9 +155,14 @@
     <ClInclude Include="src\ui\welcomeUI\WelcomeUI.h" />
     <ClInclude Include="src\utils\azureSpeechPlayer\AzureSpeechPlayer.h" />
     <ClInclude Include="src\utils\envLoader\EnvLoader.h" />
+    <ClInclude Include="src\utils\ssmlBuilder\SSMLBuilder.h" />
     <ClInclude Include="src\utils\translationFileHandler\TranslationFileHandler.h" />
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="..\.env">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

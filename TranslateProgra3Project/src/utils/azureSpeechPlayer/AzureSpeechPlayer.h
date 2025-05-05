@@ -6,12 +6,14 @@
 #include <cstdlib> 
 #include <stdexcept>
 #include "../envLoader/EnvLoader.h"
+#include "../ssmlBuilder/SSMLBuilder.h"
+#include "../../enums/SupportedLanguages.h"
 
 class AzureSpeechPlayer {
 public:
     AzureSpeechPlayer();
-    void speakFromConsoleInput(); // Usa entrada desde consola para hablar
-    void speakText(const std::string& text); // Habla el texto directamente
+    void speakFromConsoleInput();
+    void speakText(const std::string& text, SupportedLanguages lang);
 
 private:
     std::string getEnvVar(const char* name);
