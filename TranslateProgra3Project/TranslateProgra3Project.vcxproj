@@ -155,6 +155,10 @@
     <ClInclude Include="src\utils\translationFileHandler\TranslationFileHandler.h" />
   </ItemGroup>
   <ItemGroup>
+    <CopyFileToFolders Include="..\.env">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

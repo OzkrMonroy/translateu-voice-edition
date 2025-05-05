@@ -2,9 +2,16 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <filesystem>
+#include <windows.h>
 
 std::unordered_map<std::string, std::string> EnvLoader::variables;
 bool EnvLoader::loaded = false;
+
+std::unordered_map<std::string, std::string> EnvLoader::loadEnvFile() {
+    std::string path = getExecutableDir() + "\\.env";
+    return loadEnvFile(path);
+}
 
 std::unordered_map<std::string, std::string> EnvLoader::loadEnvFile(const std::string& path) {
     if (loaded) return variables;
@@ -25,7 +32,7 @@ std::unordered_map<std::string, std::string> EnvLoader::loadEnvFile(const std::s
         std::string key = line.substr(0, equalPos);
         std::string value = line.substr(equalPos + 1);
 
-        // Elimina espacios en blanco si los hay
+        // Limpiar espacios
         key.erase(0, key.find_first_not_of(" \t\r\n"));
         key.erase(key.find_last_not_of(" \t\r\n") + 1);
         value.erase(0, value.find_first_not_of(" \t\r\n"));
@@ -41,4 +48,11 @@ std::unordered_map<std::string, std::string> EnvLoader::loadEnvFile(const std::s
 std::string EnvLoader::get(const std::string& key) {
     if (!loaded) loadEnvFile();
     return variables.count(key) ? variables[key] : "";
+}
+
+std::string EnvLoader::getExecutableDir() {
+    char buffer[MAX_PATH];
+    GetModuleFileNameA(NULL, buffer, MAX_PATH);
+    std::filesystem::path exePath(buffer);
+    return exePath.parent_path().string();
 }

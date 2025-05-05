@@ -7,10 +7,16 @@ using namespace std;
 
 int main()
 {
-	AzureSpeechPlayer player;
-
-	player.speakText("Hola, ¿cómo estás?");
-	player.speakText("Hello, how are you?");
+    try {
+        AzureSpeechPlayer player;
+        player.speakText("Hola mundo, ¡este es un ejemplo!");
+    }
+    catch (const std::exception& ex) {
+        std::cerr << "Error: " << ex.what() << std::endl;
+    }
+    catch (...) {
+        std::cerr << "Unknown error occurred." << std::endl;
+    }
 
 	SetConsoleOutputCP(CP_UTF8);
 	SetConsoleCP(CP_UTF8);
