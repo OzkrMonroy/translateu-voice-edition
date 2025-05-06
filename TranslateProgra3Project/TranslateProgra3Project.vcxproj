@@ -70,6 +70,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnableManifest>true</VcpkgEnableManifest>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -139,8 +142,10 @@
     <ClCompile Include="src\ui\deprecatedMainMenu\DeprecatedMainMenu.cpp" />
     <ClCompile Include="src\ui\welcomeUI\WelcomeUI.cpp" />
     <ClCompile Include="src\utils\azureSpeechPlayer\AzureSpeechPlayer.cpp" />
+    <ClCompile Include="src\utils\azureTranslator\AzureTranslator.cpp" />
     <ClCompile Include="src\utils\envLoader\EnvLoader.cpp" />
     <ClCompile Include="src\utils\ssmlBuilder\SSMLBuilder.cpp" />
+    <ClCompile Include="src\utils\textSanatizer\TextSanatizer.cpp" />
     <ClCompile Include="src\utils\translationFileHandler\TranslationFileHandler.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -154,8 +159,10 @@
     <ClInclude Include="src\ui\deprecatedMainMenu\DeprecatedMainMenu.h" />
     <ClInclude Include="src\ui\welcomeUI\WelcomeUI.h" />
     <ClInclude Include="src\utils\azureSpeechPlayer\AzureSpeechPlayer.h" />
+    <ClInclude Include="src\utils\azureTranslator\AzureTranslator.h" />
     <ClInclude Include="src\utils\envLoader\EnvLoader.h" />
     <ClInclude Include="src\utils\ssmlBuilder\SSMLBuilder.h" />
+    <ClInclude Include="src\utils\textSanatizer\TextSanitizer.h" />
     <ClInclude Include="src\utils\translationFileHandler\TranslationFileHandler.h" />
   </ItemGroup>
   <ItemGroup>

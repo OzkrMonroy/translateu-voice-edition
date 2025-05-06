@@ -63,6 +63,10 @@ packages/
 project.lock.json
 project.assets.json
 
+# vcpkg packages
+/vcpkg_installed/
+
+
 # Windows crash dumps
 *.mdmp
 
