@@ -5,7 +5,7 @@ namespace fs = filesystem;
 
 TranslationFileHandler::TranslationFileHandler()
 {
-	path_to_main = std::filesystem::current_path();
+	path_to_main = AppPaths::getDataDir();
 }
 
 ifstream TranslationFileHandler::getFile(fs::path path)
@@ -42,6 +42,25 @@ string TranslationFileHandler::getValueFromFile(string& line)
 		if (lineEnd == string::npos)
 			lineEnd = line.size();
 		return line.substr(lineStart, lineEnd - lineStart);
+	}
+}
+
+void TranslationFileHandler::ensureFileExistsWithBaseStructure(const fs::path& file_path)
+{
+	string fullPath = (path_to_main / file_path).string();
+	fs::create_directories(fs::path(fullPath).parent_path());
+
+	if (!fs::exists(fullPath))
+	{
+		ofstream outFile(fullPath);
+		if (!outFile.is_open())
+		{
+			cerr << "No se pudo crear el archivo.\n";
+			return;
+		}
+
+		outFile << "{\n\t\"translates\": [\n\t]\n}";
+		outFile.close();
 	}
 }
 
@@ -96,25 +115,6 @@ void TranslationFileHandler::addTranslationEntry(const WordTranslations& transla
 	}
 	outFile << content;
 	outFile.close();
-}
-
-void TranslationFileHandler::ensureFileExistsWithBaseStructure(const fs::path& file_path)
-{
-	string fullPath = (path_to_main / file_path).string();
-	fs::create_directories(fs::path(fullPath).parent_path());
-
-	if (!fs::exists(fullPath))
-	{
-		ofstream outFile(fullPath);
-		if (!outFile.is_open())
-		{
-			cerr << "No se pudo crear el archivo.\n";
-			return;
-		}
-
-		outFile << "{\n\t\"translates\": [\n\t]\n}";
-		outFile.close();
-	}
 }
 
 void TranslationFileHandler::writeAllFromTree(AVLNode* root, const fs::path& file_path)

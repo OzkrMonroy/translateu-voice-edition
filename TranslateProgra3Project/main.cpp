@@ -1,32 +1,41 @@
 #include <windows.h>
 #include <iostream>
-#include "./src/utils/azureSpeechPlayer/AzureSpeechPlayer.h"
-#include "./src/utils/azureTranslator/AzureTranslator.h"
-#include "./src/utils/textSanatizer/TextSanitizer.h"
 #include "./src/ui/deprecatedMainMenu/DeprecatedMainMenu.h"
-#include "./src/enums/SupportedLanguages.h"
+#include "./src/models/user/UserModel.h"
+#include "./src/models/structs/NewUser.h"
+#include "./src/models/structs/User.h"
+
 
 using namespace std;
 
 int main()
 {
-    try {
-        AzureTranslator translator;
-        AzureSpeechPlayer player;
-        std::string baseText = "Hola mundo ¡este es un ejemplo! ¿Detecta esto si estoy haciendo una pregunta?";
-        std::string safeText = TextSanitizer::sanitizeToUtf8(baseText);
-        std::string translatedText = translator.translate(safeText, SupportedLanguages::English);
+    UserModel userModel;
+    if (!userModel.createTable()) {
+        std::cerr << "No se pudo crear la tabla de usuarios." << std::endl;
+        return 1;
+    }
+    NewUser newUser{ "Oscar Monroy", "oscar123", "miclave123" };
 
-        player.speakText(baseText, SupportedLanguages::Spanish);
-        player.speakText(translatedText, SupportedLanguages::English);
+    if (userModel.addUser(newUser)) {
+        std::cout << "Usuario agregado exitosamente." << std::endl;
+    }
+    else {
+        std::cerr << "Error al agregar el usuario (posiblemente ya existe)." << std::endl;
+    }
 
+    auto result = userModel.getUser("oscar123", "miclave123");
+
+    if (result) {
+        std::cout << "Usuario encontrado:" << std::endl;
+        std::cout << "ID: " << result->id << std::endl;
+        std::cout << "Nombre: " << result->name << std::endl;
+        std::cout << "Username: " << result->username << std::endl;
     }
-    catch (const std::exception& ex) {
-        std::cerr << "Error: " << ex.what() << std::endl;
+    else {
+        std::cout << "Usuario no encontrado." << std::endl;
     }
-    catch (...) {
-        std::cerr << "Unknown error occurred." << std::endl;
-    }
+
 
 	SetConsoleOutputCP(CP_UTF8);
 	SetConsoleCP(CP_UTF8);
