@@ -64,13 +64,6 @@ void TranslationFileHandler::ensureFileExistsWithBaseStructure(const fs::path& f
 	}
 }
 
-void TranslationFileHandler::ensureDirectoryExists(const std::string& folderPath) {
-	std::filesystem::path dir(folderPath);
-	if (!std::filesystem::exists(dir)) {
-		std::filesystem::create_directories(dir);
-	}
-}
-
 void TranslationFileHandler::addTranslationEntry(const WordTranslations& translation, const fs::path& file_path)
 {
 	string fullPath = (path_to_main / file_path).string();
