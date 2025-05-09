@@ -6,7 +6,7 @@ TranslateManager::TranslateManager() : dictionary(), fileHandler() {}
 
 void TranslateManager::loadWordsFromJSONFile()
 {
-	ifstream filePath = fileHandler.getFile("data/translates.json");
+	ifstream filePath = fileHandler.getFile("translates.json");
 
 	if (!filePath)
 	{
@@ -82,11 +82,11 @@ void TranslateManager::displayWordsInDictionary()
 void TranslateManager::addWord(const WordTranslations& word)
 {
 	dictionary.insert(word);
-	fileHandler.addTranslationEntry(word, "data/translates.json");
+	fileHandler.addTranslationEntry(word, "translates.json");
 }
 
 void TranslateManager::removeWord(const string& spanish)
 {
 	dictionary.remove(spanish);
-	fileHandler.writeAllFromTree(dictionary.getRoot(), "data/translates.json");
+	fileHandler.writeAllFromTree(dictionary.getRoot(), "translates.json");
 }
