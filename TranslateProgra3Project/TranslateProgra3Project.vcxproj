@@ -143,6 +143,7 @@
     <ClCompile Include="src\ui\welcomeUI\WelcomeUI.cpp" />
     <ClCompile Include="src\utils\azureSpeechPlayer\AzureSpeechPlayer.cpp" />
     <ClCompile Include="src\utils\azureTranslator\AzureTranslator.cpp" />
+    <ClCompile Include="src\utils\encryptionHelper\EncrytionHelper.cpp" />
     <ClCompile Include="src\utils\envLoader\EnvLoader.cpp" />
     <ClCompile Include="src\utils\ssmlBuilder\SSMLBuilder.cpp" />
     <ClCompile Include="src\utils\textSanatizer\TextSanatizer.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="src\ui\welcomeUI\WelcomeUI.h" />
     <ClInclude Include="src\utils\azureSpeechPlayer\AzureSpeechPlayer.h" />
     <ClInclude Include="src\utils\azureTranslator\AzureTranslator.h" />
+    <ClInclude Include="src\utils\encryptionHelper\EncrytionHelper.h" />
     <ClInclude Include="src\utils\envLoader\EnvLoader.h" />
     <ClInclude Include="src\utils\ssmlBuilder\SSMLBuilder.h" />
     <ClInclude Include="src\utils\textSanatizer\TextSanitizer.h" />
