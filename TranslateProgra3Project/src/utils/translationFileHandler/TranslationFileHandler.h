@@ -4,6 +4,7 @@
 #include <fstream>
 #include "../../models/structs/WordTranslations.h"
 #include "../../models/structs/AVLNode.h"
+#include "../paths/AppPaths.h"
 
 class TranslationFileHandler
 {
