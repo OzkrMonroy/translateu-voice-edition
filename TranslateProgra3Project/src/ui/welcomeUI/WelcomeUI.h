@@ -1,15 +1,12 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include "../../utils/consoleUtils/ConsoleUtils.h"
+class AuthenticationUI;
 
 class WelcomeUI {
 private:
-	void displayWelcomeOptions()const;
-	void handleUserChoise();
-	void login();
-	void registerUser();
-	void translator();
-
+	ConsoleUtils consoleUtils;
 
 public:
 	WelcomeUI();

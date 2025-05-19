@@ -2,14 +2,13 @@
 #include <iostream>
 #include <string>
 #include "../../../controllers/deprecatedManager/TranslateManager.h"
-
-
+#include "../../../utils/consoleUtils/ConsoleUtils.h"
+class WelcomeUI;
 
 class UserOptionsUI {
 private:
 	TranslateManager manager;
-	void displayMenu() const;
-	void handleUserChoise();
+	ConsoleUtils consoleUtils;
 	void translatorScreen();
 	void translateHistory();
 	void topMostSearchedWords();

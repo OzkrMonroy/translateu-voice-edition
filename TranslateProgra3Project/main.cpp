@@ -1,6 +1,6 @@
 #include <windows.h>
 #include <iostream>
-#include "./src/ui/deprecatedMainMenu/DeprecatedMainMenu.h"
+#include "./src/ui/welcomeUI/WelcomeUI.h"
 
 using namespace std;
 
@@ -8,7 +8,7 @@ int main()
 {
 	SetConsoleOutputCP(CP_UTF8);
 	SetConsoleCP(CP_UTF8);
-	DeprecatedMainMenu menu;
-	menu.run();
+	WelcomeUI welcomeUI;
+	welcomeUI.run();
 	return 0;
 }
