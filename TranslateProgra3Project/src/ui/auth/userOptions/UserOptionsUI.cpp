@@ -1,4 +1,5 @@
 #include "UserOptionsUI.h"
+#include "../../welcomeUI/WelcomeUI.h"
 using namespace std;
 
 UserOptionsUI::UserOptionsUI()
@@ -8,45 +9,44 @@ UserOptionsUI::UserOptionsUI()
 
 void UserOptionsUI::run()
 {
-	while (true) {
-		displayMenu();
-		handleUserChoise();
-	}
-}
-
-
-void UserOptionsUI::displayMenu() const
-{
-	cout << "\n--- Opciones de Usuario ---\n";
-	cout << "1. Traducir\n";
-	cout << "2. Ver historial de traducciones\n";
-	cout << "3. Top de palabras más buscadas\n";
-	cout << "4. Salir\n";
-	cout << "Seleccione una opción: ";
-}
-
-void UserOptionsUI::handleUserChoise()
-{
+	WelcomeUI welcome;
+	string name = "Test";
 	int choise;
-	cin >> choise;
-	cin.ignore();
+	bool displayScreen = true;
 
-	switch (choise)
-	{
-	case 1:
-		translatorScreen();
-		break;
-	case 2:
-		translateHistory();
-		break;
-	case 3:
-		topMostSearchedWords();
-		break;
-	case 4:
-		cout << "Saliendo del programa...\n";
-		exit(0);
-	default:
-		cout << "Opción no válida. Intente de nuevo.\n";
+	while (displayScreen) {
+		consoleUtils.clear();
+		consoleUtils.printTitle("Bienvenido " + name);
+		consoleUtils.writeLine("Seleccione el número de la opcion que desea realizar:");
+		consoleUtils.writeLine("1. Traducir");
+		consoleUtils.writeLine("2. Ver historial de traducciones");
+		consoleUtils.writeLine("3. Top de palabras más buscadas");
+		consoleUtils.writeLine("4. Cerrar sesion");
+
+		cin >> choise;
+		cin.ignore();
+
+		switch (choise)
+		{
+		case 1:
+			translatorScreen();
+			break;
+		case 2:
+			translateHistory();
+			break;
+		case 3:
+			topMostSearchedWords();
+			break;
+		case 4:
+			consoleUtils.writeLine("Cerrando sesion...");
+			consoleUtils.wait(2000);
+			welcome.run();
+			displayScreen = false;
+			break;
+		default:
+			cout << "Opción no válida. Intente de nuevo.\n";
+			break;
+		}
 	}
 }
 
