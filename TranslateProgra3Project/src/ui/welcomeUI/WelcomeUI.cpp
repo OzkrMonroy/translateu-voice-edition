@@ -1,5 +1,6 @@
 #include "WelcomeUI.h"
 #include "../auth/authentication/AuthenticationUI.h"
+#include "../translateUI/TranslateUI.h"
 using namespace std;
 
 WelcomeUI::WelcomeUI()
@@ -9,6 +10,7 @@ WelcomeUI::WelcomeUI()
 void WelcomeUI::run()
 {
 	AuthenticationUI authUI;
+	TranslateUI translateUI;
 	int choise;
 	bool displayScreen = true;
 
@@ -29,11 +31,12 @@ void WelcomeUI::run()
 			displayScreen = false;
 			break;
 		case 2:
-			consoleUtils.write("Opcion para traducir");
+			translateUI.run();
+			displayScreen = false;
 			break;
 		case 3:
 			consoleUtils.writeLine("Saliendo del programa...");
-			consoleUtils.wait(2500);
+			consoleUtils.wait(1500);
 			exit(0);
 			break;
 		}

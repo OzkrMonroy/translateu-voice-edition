@@ -142,6 +142,7 @@
     <ClCompile Include="src\ui\auth\authentication\AuthenticationUI.cpp" />
     <ClCompile Include="src\ui\auth\userOptions\UserOptionsUI.cpp" />
     <ClCompile Include="src\ui\deprecatedMainMenu\DeprecatedMainMenu.cpp" />
+    <ClCompile Include="src\ui\translateUI\TranslateUI.cpp" />
     <ClCompile Include="src\ui\welcomeUI\WelcomeUI.cpp" />
     <ClCompile Include="src\utils\azureSpeechPlayer\AzureSpeechPlayer.cpp" />
     <ClCompile Include="src\utils\azureTranslator\AzureTranslator.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="src\ui\auth\authentication\AuthenticationUI.h" />
     <ClInclude Include="src\ui\auth\userOptions\UserOptionsUI.h" />
     <ClInclude Include="src\ui\deprecatedMainMenu\DeprecatedMainMenu.h" />
+    <ClInclude Include="src\ui\translateUI\TranslateUI.h" />
     <ClInclude Include="src\ui\welcomeUI\WelcomeUI.h" />
     <ClInclude Include="src\utils\azureSpeechPlayer\AzureSpeechPlayer.h" />
     <ClInclude Include="src\utils\azureTranslator\AzureTranslator.h" />
