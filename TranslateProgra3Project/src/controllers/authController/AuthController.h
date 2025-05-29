@@ -4,6 +4,7 @@
 #include <optional>
 #include "../../models/user/UserModel.h"
 #include "../../models/structs/NewUser.h"
+#include "../../utils/paths/AppPaths.h"
 
 class AuthController 
 {
@@ -22,10 +23,11 @@ public:
 
 	~AuthController();
 
-	static AuthController* getInstance(const std::string& dbPath = "data/users.db");
+	static AuthController* getInstance(const std::string& dbPath = (AppPaths::getDataDir() / "users.db").string());
 
 	
 	bool login(const std::string& userName, const std::string& password);
 	bool registeredUser(const NewUser& user) const;
-	std::optional<User> getCurrentUser() const; 
+	void logout();
+	std::optional<User> getCurrentUser() const;
 };

@@ -45,12 +45,8 @@ bool UserModel::createTable() {
 }
 
 bool UserModel::addUser(const NewUser& user) {
-    
-    std::cerr << "[DEBUG] Buscando usuario: " << user.username << std::endl;
-
     if (getUserByUsername(user.username).has_value()) {
         std::cerr << "El usuario con username '" << user.username << "' ya existe." << std::endl;
-       
         return false;
     }
 

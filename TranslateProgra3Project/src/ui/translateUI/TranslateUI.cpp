@@ -4,13 +4,14 @@
 using namespace std;
 
 TranslateUI::TranslateUI() {
-	TranslateUI::isAuthenticated = true;
+	authController = AuthController::getInstance();
+	currentUser = authController->getCurrentUser();
 }
 
 void TranslateUI::run() {
 	consoleUtils.clear();
 	consoleUtils.printTitle("Traductor");
-	if (!isAuthenticated) {
+	if (!currentUser.has_value()) {
 		consoleUtils.writeLine("Solo se traducira al ingles, para traducir a mas idiomas inicia sesion");
 	}
 	consoleUtils.writeLine("Ingresa la palabra u oracion a traducir:");
@@ -22,7 +23,7 @@ void TranslateUI::displayTranslateResult() {
 	englishResult = translator.translate(wordToTranslate, SupportedLanguages::English);
 	consoleUtils.clear();
 	consoleUtils.printTitle("Resultado");
-	if(isAuthenticated){
+	if(currentUser.has_value()){
 		frenchResult = translator.translate(wordToTranslate, SupportedLanguages::French);
 		italianResult = translator.translate(wordToTranslate, SupportedLanguages::Italian);
 		germanResult = translator.translate(wordToTranslate, SupportedLanguages::German);
@@ -38,7 +39,7 @@ void TranslateUI::displayTranslateResult() {
 }
 
 void TranslateUI::verifyUserWantsToHearTheResult() {
-	if (isAuthenticated) {
+	if (currentUser.has_value()) {
 		int choise;
 		consoleUtils.writeLine("¿Desea reproducir el audio de alguno de los resultados?");
 		consoleUtils.writeLine("1. Si");

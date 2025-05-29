@@ -6,6 +6,8 @@
 #include "../../utils/azureTranslator/AzureTranslator.h"
 #include "../../utils/azureSpeechPlayer/AzureSpeechPlayer.h"
 #include "../../enums/SupportedLanguages.h"
+#include "../../controllers/authController/AuthController.h"
+#include "../../models/structs/User.h"
 class WelcomeUI;
 class UserOptionsUI;
 
@@ -15,12 +17,13 @@ private:
 	ConsoleUtils consoleUtils;
 	AzureTranslator translator;
 	AzureSpeechPlayer player;
+	AuthController* authController;
 	std::string wordToTranslate;
 	std::string englishResult;
 	std::string frenchResult;
 	std::string italianResult;
 	std::string germanResult;
-	bool isAuthenticated;
+	std::optional<User> currentUser;
 	void displayTranslateResult();
 	void pronounceWords();
 	void verifyUserWantsToHearTheResult();

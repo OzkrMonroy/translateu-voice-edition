@@ -59,14 +59,14 @@ void AuthenticationUI::login(bool &displayScreen){
 		consoleUtils.writeLine("Nombre de usuario: " + userName);
 		consoleUtils.writeLine("Contrase�a: " + password);
 		consoleUtils.writeLine("Iniciando sesion...");
-		consoleUtils.wait(3000);
+		consoleUtils.wait(1000);
 		UserOptionsUI userUI;
 		userUI.run();
 		displayScreen = false;
 	}
 	else {
 		consoleUtils.writeLine("Credenciales incorrectas");
-		consoleUtils.wait(3000);
+		consoleUtils.wait(1000);
 	}
 
 
@@ -86,7 +86,7 @@ void AuthenticationUI::registerUser(bool& displayScreen) {
 
 	if (password != confirmPassword) {
 		consoleUtils.writeLine("Las contrase�as no coinciden.");
-		consoleUtils.wait(3000);
+		consoleUtils.wait(1000);
 		return;
 	}
 
@@ -94,17 +94,15 @@ void AuthenticationUI::registerUser(bool& displayScreen) {
 	
 
 	if (controller->registeredUser(newUser)) {
-		consoleUtils.writeLine("Nombre: " + name);
-		consoleUtils.writeLine("Nombre de usuario: " + userName);
-		consoleUtils.writeLine("Contrase�a: " + password);
+		controller->login(newUser.username, newUser.password);
 		consoleUtils.writeLine("Iniciando sesion...");
-		consoleUtils.wait(3000);
+		consoleUtils.wait(1000);
 		UserOptionsUI userUI;
 		userUI.run();
 		displayScreen = false;
 	}
 	else {
 		consoleUtils.writeLine("Error: El usuario ya existe");
-		consoleUtils.wait(3000);
+		consoleUtils.wait(1000);
 	}
 }
