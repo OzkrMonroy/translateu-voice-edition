@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\controllers\authController\AuthController.cpp" />
     <ClCompile Include="src\controllers\deprecatedManager\TranslateManager.cpp" />
     <ClCompile Include="src\enums\SupportedLanguages.cpp" />
     <ClCompile Include="src\models\avlTree\DictionaryAVLTree.cpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\controllers\authController\AuthController.h" />
     <ClInclude Include="src\controllers\deprecatedManager\TranslateManager.h" />
     <ClInclude Include="src\enums\SupportedLanguages.h" />
     <ClInclude Include="src\models\avlTree\DictionaryAVLTree.h" />

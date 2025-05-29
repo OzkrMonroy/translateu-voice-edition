@@ -46,14 +46,17 @@ bool UserModel::createTable() {
 
 bool UserModel::addUser(const NewUser& user) {
     
+    std::cerr << "[DEBUG] Buscando usuario: " << user.username << std::endl;
+
     if (getUserByUsername(user.username).has_value()) {
         std::cerr << "El usuario con username '" << user.username << "' ya existe." << std::endl;
+       
         return false;
     }
 
     std::string sql = "INSERT INTO users (name, username, password) VALUES (?, ?, ?);";
     sqlite3_stmt* stmt = nullptr;
-
+    
     if (sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr) != SQLITE_OK)
         return false;
 
@@ -67,6 +70,8 @@ bool UserModel::addUser(const NewUser& user) {
 }
 
 std::optional<User> UserModel::getUserByUsername(const std::string& username) {
+    std::cerr << "[DEBUG] Ejecutando getUserByUsername con: " << username << std::endl;
+
     return findUserByQuery("SELECT id, name, username FROM users WHERE username = ?", { username });
 }
 
