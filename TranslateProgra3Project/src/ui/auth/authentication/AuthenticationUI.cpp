@@ -1,9 +1,14 @@
 #include "AuthenticationUI.h"
 #include "../../welcomeUI/WelcomeUI.h"
 #include "../userOptions/UserOptionsUI.h"
+
+
 using namespace std;
 
-AuthenticationUI::AuthenticationUI(){}
+
+AuthenticationUI::AuthenticationUI() {
+	controller = AuthController::getInstance(); 
+}
 
 void AuthenticationUI::run() {
 	WelcomeUI welcomeUI;
@@ -13,8 +18,8 @@ void AuthenticationUI::run() {
 	while (displayScreen) {
 		consoleUtils.clear();
 		consoleUtils.printTitle("Ingreso al sistema");
-		consoleUtils.writeLine("Seleccione el número de la opcion que desea realizar:");
-		consoleUtils.writeLine("1. Iniciar sesión");
+		consoleUtils.writeLine("Seleccione el nï¿½mero de la opcion que desea realizar:");
+		consoleUtils.writeLine("1. Iniciar sesiï¿½n");
 		consoleUtils.writeLine("2. Registrarse");
 		consoleUtils.writeLine("3. Regresar al menu principal");
 
@@ -44,21 +49,29 @@ void AuthenticationUI::login(bool &displayScreen){
 	string password;
 
 	consoleUtils.clear();
-	consoleUtils.printTitle("Inicio de sesión");
+	consoleUtils.printTitle("Inicio de sesiï¿½n");
 	consoleUtils.write("Ingrese su nombre de usuario:");
 	getline(cin, userName);
-	consoleUtils.write("Ingrese su contraseña:");
+	consoleUtils.write("Ingrese su contraseï¿½a:");
 	getline(cin, password);
 
-	consoleUtils.writeLine("Nombre de usuario: " + userName);
-	consoleUtils.writeLine("Contraseña: " + password);
-	consoleUtils.writeLine("Iniciando sesion...");
-	consoleUtils.wait(3000);
-	UserOptionsUI userUI;
-	userUI.run();
-	displayScreen = false;
+	if (controller->login(userName, password)) {
+		consoleUtils.writeLine("Nombre de usuario: " + userName);
+		consoleUtils.writeLine("Contraseï¿½a: " + password);
+		consoleUtils.writeLine("Iniciando sesion...");
+		consoleUtils.wait(3000);
+		UserOptionsUI userUI;
+		userUI.run();
+		displayScreen = false;
+	}
+	else {
+		consoleUtils.writeLine("Credenciales incorrectas");
+		consoleUtils.wait(3000);
+	}
+
+
 }
-void AuthenticationUI::registerUser(bool &displayScreen) {
+void AuthenticationUI::registerUser(bool& displayScreen) {
 	string userName, name, password, confirmPassword;
 	consoleUtils.clear();
 	consoleUtils.printTitle("Registro de usuario");
@@ -66,17 +79,32 @@ void AuthenticationUI::registerUser(bool &displayScreen) {
 	getline(cin, name);
 	consoleUtils.write("Ingrese su nombre de usuario: ");
 	getline(cin, userName);
-	consoleUtils.write("Ingrese su contraseña: ");
+	consoleUtils.write("Ingrese su contraseï¿½a: ");
 	getline(cin, password);
-	consoleUtils.write("Confirme su contraseña: ");
+	consoleUtils.write("Confirme su contraseï¿½a: ");
 	getline(cin, confirmPassword);
 
-	consoleUtils.writeLine("Nombre: " + name);
-	consoleUtils.writeLine("Nombre de usuario: " + userName);
-	consoleUtils.writeLine("Contraseña: " + password);
-	consoleUtils.writeLine("Iniciando sesion...");
-	consoleUtils.wait(3000);
-	UserOptionsUI userUI;
-	userUI.run();
-	displayScreen = false;
+	if (password != confirmPassword) {
+		consoleUtils.writeLine("Las contraseï¿½as no coinciden.");
+		consoleUtils.wait(3000);
+		return;
+	}
+
+	NewUser newUser{ name, userName, password };
+	
+
+	if (controller->registeredUser(newUser)) {
+		consoleUtils.writeLine("Nombre: " + name);
+		consoleUtils.writeLine("Nombre de usuario: " + userName);
+		consoleUtils.writeLine("Contraseï¿½a: " + password);
+		consoleUtils.writeLine("Iniciando sesion...");
+		consoleUtils.wait(3000);
+		UserOptionsUI userUI;
+		userUI.run();
+		displayScreen = false;
+	}
+	else {
+		consoleUtils.writeLine("Error: El usuario ya existe");
+		consoleUtils.wait(3000);
+	}
 }
