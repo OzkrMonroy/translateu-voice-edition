@@ -3,6 +3,7 @@
 #include <string>
 #include "../../../utils/consoleUtils/ConsoleUtils.h"
 #include "../../../controllers/authController/AuthController.h"
+#include "../../../utils/encryptionHelper/EncrytionHelper.h"
 class WelcomeUI;
 class UserOptionsUI;
 
@@ -12,6 +13,7 @@ private:
 	void registerUser(bool &displayScreen);
 	ConsoleUtils consoleUtils;
 	AuthController* controller;
+	EncrytionHelper encryptionHelper;
 
 public:
 	AuthenticationUI();

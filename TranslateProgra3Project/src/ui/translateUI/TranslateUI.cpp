@@ -28,10 +28,13 @@ void TranslateUI::displayTranslateResult() {
 		italianResult = translator.translate(wordToTranslate, SupportedLanguages::Italian);
 		germanResult = translator.translate(wordToTranslate, SupportedLanguages::German);
 
+		registerWordToFile();
+
 		consoleUtils.writeLine("Ingles: " + englishResult);
 		consoleUtils.writeLine("Frances: " + frenchResult);
 		consoleUtils.writeLine("Italiano: " + italianResult);
 		consoleUtils.writeLine("Aleman: " + germanResult);
+
 	}else {
 		consoleUtils.writeLine("Ingles: " + englishResult);
 	}
@@ -114,3 +117,16 @@ void TranslateUI::pronounceWords() {
 		}
 	}
 };
+
+void TranslateUI::registerWordToFile(){
+	WordTranslations word;
+	word.spanish = wordToTranslate;
+	word.english = englishResult;
+	word.french = frenchResult;
+	word.italian = italianResult;
+	word.german = germanResult;
+	string extension = ".eme";
+	string fileName = currentUser.value().userFile + extension;
+
+	tManager.addWord(word, (AppPaths::getTranslationsDir() / fileName).string());
+}

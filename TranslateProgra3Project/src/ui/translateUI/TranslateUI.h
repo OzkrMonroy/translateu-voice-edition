@@ -8,6 +8,9 @@
 #include "../../enums/SupportedLanguages.h"
 #include "../../controllers/authController/AuthController.h"
 #include "../../models/structs/User.h"
+#include "../../models/structs/WordTranslations.h"
+#include "../../utils/paths/AppPaths.h"
+
 class WelcomeUI;
 class UserOptionsUI;
 
@@ -27,6 +30,7 @@ private:
 	void displayTranslateResult();
 	void pronounceWords();
 	void verifyUserWantsToHearTheResult();
+	void registerWordToFile();
 
 public:
 	TranslateUI();

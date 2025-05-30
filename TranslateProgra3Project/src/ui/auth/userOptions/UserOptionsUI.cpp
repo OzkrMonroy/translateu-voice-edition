@@ -5,7 +5,6 @@ using namespace std;
 
 UserOptionsUI::UserOptionsUI()
 {
-	manager.loadWordsFromJSONFile();
 	authController = AuthController::getInstance();
 }
 
@@ -15,8 +14,12 @@ void UserOptionsUI::run()
 	TranslateUI translateUI;
 	currentUser = authController->getCurrentUser();
 	string name = "";
+	string fileName = "";
 	if (currentUser.has_value()) {
 		name = currentUser.value().name;
+		string extension = ".eme";
+		string fileName = name + extension;
+		manager.loadWordsFromJSONFile((appPaths.getTranslationsDir() / fileName).string());
 	}
 
 	int choise;

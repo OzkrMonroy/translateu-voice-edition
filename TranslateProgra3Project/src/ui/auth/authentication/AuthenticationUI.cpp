@@ -89,10 +89,9 @@ void AuthenticationUI::registerUser(bool& displayScreen) {
 		consoleUtils.wait(1000);
 		return;
 	}
-
-	NewUser newUser{ name, userName, password };
+	string userFile = encryptionHelper.encrypter(userName);
+	NewUser newUser{ name, userName, password, userFile };
 	
-
 	if (controller->registeredUser(newUser)) {
 		controller->login(newUser.username, newUser.password);
 		consoleUtils.writeLine("Iniciando sesion...");
