@@ -1,16 +1,27 @@
 #include "UserOptionsUI.h"
 #include "../../welcomeUI/WelcomeUI.h"
+#include "../../translateUI/TranslateUI.h"
 using namespace std;
 
 UserOptionsUI::UserOptionsUI()
 {
-	manager.loadWordsFromJSONFile();
+	authController = AuthController::getInstance();
 }
 
 void UserOptionsUI::run()
 {
 	WelcomeUI welcome;
-	string name = "Test";
+	TranslateUI translateUI;
+	currentUser = authController->getCurrentUser();
+	string name = "";
+	string fileName = "";
+	if (currentUser.has_value()) {
+		name = currentUser.value().name;
+		string extension = ".eme";
+		string fileName = name + extension;
+		manager.loadWordsFromJSONFile((appPaths.getTranslationsDir() / fileName).string());
+	}
+
 	int choise;
 	bool displayScreen = true;
 
@@ -29,7 +40,8 @@ void UserOptionsUI::run()
 		switch (choise)
 		{
 		case 1:
-			translatorScreen();
+			translateUI.run();
+			displayScreen = false;
 			break;
 		case 2:
 			translateHistory();
@@ -38,6 +50,7 @@ void UserOptionsUI::run()
 			topMostSearchedWords();
 			break;
 		case 4:
+			authController->logout();
 			consoleUtils.writeLine("Cerrando sesion...");
 			consoleUtils.wait(2000);
 			welcome.run();
@@ -48,19 +61,6 @@ void UserOptionsUI::run()
 			break;
 		}
 	}
-}
-
-void UserOptionsUI::translatorScreen()
-{
-	string text;
-	int languageOption;
-
-	cout << "Ingrese texto a traducir\n";
-	getline(cin, text);
-
-	cout << "Ingrese idioma al que quiere traducir\n";
-	cin >> languageOption;
-
 }
 
 void UserOptionsUI::translateHistory()

@@ -34,8 +34,11 @@ bool AuthController::login(const std::string& userName, const std::string& passw
 bool AuthController::registeredUser(const NewUser& user) const
 {
 	UserModel model(dbPath);
-    
-	return model.addUser(user); 
+    return model.addUser(user);
+}
+
+void AuthController::logout() {
+	currentUser = nullopt;
 }
 
 

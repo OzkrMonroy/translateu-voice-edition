@@ -12,8 +12,8 @@ private:
 
 public:
 	TranslateManager();
-	void loadWordsFromJSONFile();
+	void loadWordsFromJSONFile(std::filesystem::path path);
 	void displayWordsInDictionary();
-	void addWord(const WordTranslations& word);
-	void removeWord(const std::string& spanish);
+	void addWord(const WordTranslations& word, std::filesystem::path path);
+	void removeWord(const std::string& spanish, std::filesystem::path path);
 };

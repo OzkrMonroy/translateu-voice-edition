@@ -1,12 +1,12 @@
 ﻿#include "TranslateManager.h"
-
 using namespace std;
+namespace fs = filesystem;
 
 TranslateManager::TranslateManager() : dictionary(), fileHandler() {}
 
-void TranslateManager::loadWordsFromJSONFile()
+void TranslateManager::loadWordsFromJSONFile(fs::path path)
 {
-	ifstream filePath = fileHandler.getFile("translates.json");
+	ifstream filePath = fileHandler.getFile(path);
 
 	if (!filePath)
 	{
@@ -79,14 +79,14 @@ void TranslateManager::displayWordsInDictionary()
 	dictionary.inOrderTraversal();
 }
 
-void TranslateManager::addWord(const WordTranslations& word)
+void TranslateManager::addWord(const WordTranslations& word, fs::path path)
 {
 	dictionary.insert(word);
-	fileHandler.addTranslationEntry(word, "translates.json");
+	fileHandler.addTranslationEntry(word, path);
 }
 
-void TranslateManager::removeWord(const string& spanish)
+void TranslateManager::removeWord(const string& spanish, fs::path path)
 {
 	dictionary.remove(spanish);
-	fileHandler.writeAllFromTree(dictionary.getRoot(), "translates.json");
+	fileHandler.writeAllFromTree(dictionary.getRoot(), path);
 }

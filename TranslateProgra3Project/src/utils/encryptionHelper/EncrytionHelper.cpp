@@ -21,9 +21,6 @@ string EncrytionHelper::encrypter(string text)
             resultado += letra;
         }
     }
-
-    std::cout << resultado << std::endl;
-
     return resultado;
    
 }
@@ -53,7 +50,5 @@ std::string EncrytionHelper::decrypter(std::string codeText)
             ++i;
         }
     }
-
-    std::cout << resultado << std::endl;
     return resultado;
 }

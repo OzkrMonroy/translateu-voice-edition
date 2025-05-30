@@ -3,7 +3,7 @@ using namespace std;
 
 DeprecatedMainMenu::DeprecatedMainMenu()
 {
-	manager.loadWordsFromJSONFile();
+	manager.loadWordsFromJSONFile("translates.json");
 }
 
 void DeprecatedMainMenu::run()
@@ -70,7 +70,7 @@ void DeprecatedMainMenu::addWord()
 	cout << "Ingrese la traducción en alemán: ";
 	getline(cin, word.german);
 
-	manager.addWord(word);
+	manager.addWord(word, "translates.json");
 }
 
 void DeprecatedMainMenu::deleteWord()
@@ -79,6 +79,6 @@ void DeprecatedMainMenu::deleteWord()
 	cout << "Ingrese la palabra en español a eliminar: ";
 	getline(cin, word);
 
-	manager.removeWord(word);
+	manager.removeWord(word, "translates.json");
 	cout << "La palabra ha sido eliminada. \n";
 }

@@ -28,7 +28,8 @@ bool UserModel::createTable() {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             username TEXT NOT NULL UNIQUE,
-            password TEXT NOT NULL
+            password TEXT NOT NULL,
+            userFile TEXT NOT NULL
         );
     )";
 
@@ -45,16 +46,12 @@ bool UserModel::createTable() {
 }
 
 bool UserModel::addUser(const NewUser& user) {
-    
-    std::cerr << "[DEBUG] Buscando usuario: " << user.username << std::endl;
-
     if (getUserByUsername(user.username).has_value()) {
         std::cerr << "El usuario con username '" << user.username << "' ya existe." << std::endl;
-       
         return false;
     }
 
-    std::string sql = "INSERT INTO users (name, username, password) VALUES (?, ?, ?);";
+    std::string sql = "INSERT INTO users (name, username, password, userFile) VALUES (?, ?, ?, ?);";
     sqlite3_stmt* stmt = nullptr;
     
     if (sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr) != SQLITE_OK)
@@ -63,6 +60,7 @@ bool UserModel::addUser(const NewUser& user) {
     sqlite3_bind_text(stmt, 1, user.name.c_str(), -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(stmt, 2, user.username.c_str(), -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(stmt, 3, user.password.c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 4, user.userFile.c_str(), -1, SQLITE_TRANSIENT);
 
     bool success = (sqlite3_step(stmt) == SQLITE_DONE);
     sqlite3_finalize(stmt);
@@ -70,13 +68,11 @@ bool UserModel::addUser(const NewUser& user) {
 }
 
 std::optional<User> UserModel::getUserByUsername(const std::string& username) {
-    std::cerr << "[DEBUG] Ejecutando getUserByUsername con: " << username << std::endl;
-
     return findUserByQuery("SELECT id, name, username FROM users WHERE username = ?", { username });
 }
 
 std::optional<User> UserModel::getUser(const std::string& username, const std::string& password) {
-    return findUserByQuery("SELECT id, name, username FROM users WHERE username = ? AND password = ?", { username, password });
+    return findUserByQuery("SELECT id, name, username, userFile FROM users WHERE username = ? AND password = ?", { username, password });
 }
 
 
@@ -94,6 +90,7 @@ std::optional<User> UserModel::findUserByQuery(const std::string& sql, const std
         user.id = sqlite3_column_int(stmt, 0);
         user.name = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
         user.username = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2));
+        user.userFile = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3));
         sqlite3_finalize(stmt);
         return user;
     }
