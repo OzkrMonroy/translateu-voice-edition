@@ -71,10 +71,54 @@ void UserOptionsUI::run()
 void UserOptionsUI::translateHistory()
 {
 	DictionaryAVLTree dictionaryAVL = manager->getDictionaryAVL();
+	vector<WordTranslations> wordList;
 	consoleUtils.printTitle("Historial de búsquedas");
-	dictionaryAVL.inOrderTraversal();
-	consoleUtils.waitForEnter();
-	run();
+	dictionaryAVL.inOrderTraversal(wordList);
+	for (size_t i = 0; i < wordList.size(); ++i) {
+		consoleUtils.writeLine("=== " + to_string(i + 1) + ". " + wordList[i].spanish + " ===");
+		consoleUtils.writeLine("Inglés: " + wordList[i].english);
+		consoleUtils.writeLine("Italiano: " + wordList[i].italian);
+		consoleUtils.writeLine("Francés: " + wordList[i].french);
+		consoleUtils.writeLine("Alemán: " + wordList[i].german);
+	}
+	askForDelete(wordList);
+}
+
+void UserOptionsUI::askForDelete(vector<WordTranslations>& wordList) {
+	int choise;
+	consoleUtils.writeLine("¿Desea eliminar una palabra y su traducción?");
+	consoleUtils.writeLine("1. Si");
+	consoleUtils.writeLine("2. No");
+
+	cin >> choise;
+
+	if(choise == 1){
+		deleteWord(wordList);
+	}
+	else {
+		consoleUtils.writeLine("Regresando al menú anterior...");
+		consoleUtils.wait(500);
+		run();
+	}
+}
+
+void UserOptionsUI::deleteWord(vector<WordTranslations>& wordList) {
+	string fileName = currentUser.value().userFile + ".ly";
+	consoleUtils.writeLine("Ingrese el número de la palabra a eliminar: ");
+	int index;
+	cin >> index;
+	cin.ignore();
+
+	if (index > 0 && index <= wordList.size()) {
+		std::string wordToDelete = wordList[index - 1].spanish;
+		manager->removeWord(wordToDelete, fileName);
+		consoleUtils.writeLine("Palabra eliminada correctamente.");
+		consoleUtils.wait(750);
+		translateHistory();
+	}
+	else {
+		consoleUtils.writeLine("Índice inválido.");
+	}
 }
 
 void UserOptionsUI::topMostSearchedWords()
@@ -87,8 +131,10 @@ void UserOptionsUI::generateDecriptedFile() {
 	consoleUtils.writeLine("Generando archivo...");
 	string fileName = currentUser.value().userFile + ".dec";
 	manager->generateDecriptedFile(fileName);
+	consoleUtils.wait(750);
 	consoleUtils.writeLine("Archivo generado con exito!");
-	consoleUtils.wait(1500);
+	consoleUtils.writeLine("Regresando a la pantalla anterior...");
+	consoleUtils.wait(750);
 	run();
 }
 

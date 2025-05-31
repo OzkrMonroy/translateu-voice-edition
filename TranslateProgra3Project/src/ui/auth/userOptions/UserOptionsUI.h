@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <vector>
 #include "../../../controllers/deprecatedManager/TranslateManager.h"
 #include "../../../controllers/authController/AuthController.h"
 #include "../../../models/structs/User.h"
@@ -19,6 +20,8 @@ private:
 	void translateHistory();
 	void topMostSearchedWords();
 	void generateDecriptedFile();
+	void askForDelete(std::vector<WordTranslations>& wordList);
+	void deleteWord(std::vector<WordTranslations>& wordList);
 
 public:
 	UserOptionsUI();

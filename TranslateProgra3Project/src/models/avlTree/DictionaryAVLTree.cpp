@@ -21,9 +21,9 @@ void DictionaryAVLTree::remove(const string& word)
 	root = removeNode(root, word);
 }
 
-void DictionaryAVLTree::inOrderTraversal() const
+void DictionaryAVLTree::inOrderTraversal(vector<WordTranslations>& words) const
 {
-	inOrderTraversal(root);
+	inOrderTraversal(root, words);
 }
 
 AVLNode* DictionaryAVLTree::getRoot() const
@@ -191,18 +191,14 @@ AVLNode* DictionaryAVLTree::rotateLeft(AVLNode* unbalancedNode)
 	return newRoot;
 }
 
-void DictionaryAVLTree::inOrderTraversal(AVLNode* node) const
+void DictionaryAVLTree::inOrderTraversal(AVLNode* node, std::vector<WordTranslations>& words) const
 {
 	if (!node)
 		return;
 
-	inOrderTraversal(node->left);
-	console.writeLine("===Traducciones para: " + node->word.spanish + " ===");
-	console.writeLine("Inglés: " + node->word.english);
-	console.writeLine("Italiano: " + node->word.italian);
-	console.writeLine("Francés: " + node->word.french);
-	console.writeLine("Alemán: " + node->word.german);
-	inOrderTraversal(node->right);
+	inOrderTraversal(node->left, words);
+	words.push_back(node->word);
+	inOrderTraversal(node->right, words);
 }
 
 void DictionaryAVLTree::destroyTree(AVLNode* node)

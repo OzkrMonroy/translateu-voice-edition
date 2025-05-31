@@ -47,6 +47,7 @@ void TranslateUI::verifyUserWantsToHearTheResult() {
 		int choise;
 		consoleUtils.writeLine("¿Desea reproducir el audio de alguno de los resultados?");
 		consoleUtils.writeLine("1. Si");
+		consoleUtils.writeLine("2. No");
 		cin >> choise;
 
 		if (choise == 1) {
@@ -125,8 +126,7 @@ void TranslateUI::registerWordToFile(){
 	word.french = frenchResult;
 	word.italian = italianResult;
 	word.german = germanResult;
-	string extension = ".ly";
-	string fileName = currentUser.value().userFile + extension;
+	string fileName = currentUser.value().userFile + ".ly";
 
 	tManager->addWord(word, fileName);
 }
