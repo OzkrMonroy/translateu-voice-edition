@@ -17,26 +17,44 @@ void TranslateUI::run() {
 	}
 	consoleUtils.writeLine("Ingresa la palabra u oracion a traducir:");
 	getline(cin,wordToTranslate);
-	displayTranslateResult();
+	verifyWordAlreadyExists(wordToTranslate);
 }
 
-void TranslateUI::displayTranslateResult() {
+void TranslateUI::verifyWordAlreadyExists(string& spanishWord){
+	WordTranslations* wordResult = tManager->findWord(spanishWord);
+	if (wordResult != nullptr) {
+		wordResult->searchCount++;
+		frenchResult = wordResult->french;
+		englishResult = wordResult->english;
+		italianResult = wordResult->italian;
+		germanResult = wordResult->german;
+		displayTranslateResult();
+	}
+	else {
+		translateWords();
+		displayTranslateResult();
+	}
+}
+
+void TranslateUI::translateWords() {
 	englishResult = translator.translate(wordToTranslate, SupportedLanguages::English);
-	consoleUtils.clear();
-	consoleUtils.printTitle("Resultado");
-	if(currentUser.has_value()){
+	if (currentUser.has_value()) {
 		frenchResult = translator.translate(wordToTranslate, SupportedLanguages::French);
 		italianResult = translator.translate(wordToTranslate, SupportedLanguages::Italian);
 		germanResult = translator.translate(wordToTranslate, SupportedLanguages::German);
-
 		registerWordToFile();
+	}
+}
 
+void TranslateUI::displayTranslateResult() {
+	if(currentUser.has_value()){
+		consoleUtils.printTitle("Resultado para: " + wordToTranslate);
 		consoleUtils.writeLine("Ingles: " + englishResult);
 		consoleUtils.writeLine("Frances: " + frenchResult);
 		consoleUtils.writeLine("Italiano: " + italianResult);
 		consoleUtils.writeLine("Aleman: " + germanResult);
-
 	}else {
+		consoleUtils.printTitle("Resultado para: " + wordToTranslate);
 		consoleUtils.writeLine("Ingles: " + englishResult);
 	}
 	verifyUserWantsToHearTheResult();
@@ -126,6 +144,7 @@ void TranslateUI::registerWordToFile(){
 	word.french = frenchResult;
 	word.italian = italianResult;
 	word.german = germanResult;
+	word.searchCount = 1;
 	string fileName = currentUser.value().userFile + ".ly";
 
 	tManager->addWord(word, fileName);

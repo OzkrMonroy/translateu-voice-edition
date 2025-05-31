@@ -30,6 +30,8 @@ private:
 	void pronounceWords();
 	void verifyUserWantsToHearTheResult();
 	void registerWordToFile();
+	void translateWords();
+	void verifyWordAlreadyExists(std::string& spanishWord);
 
 public:
 	TranslateUI();

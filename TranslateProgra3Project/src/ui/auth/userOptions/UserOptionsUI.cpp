@@ -70,10 +70,8 @@ void UserOptionsUI::run()
 
 void UserOptionsUI::translateHistory()
 {
-	DictionaryAVLTree dictionaryAVL = manager->getDictionaryAVL();
-	vector<WordTranslations> wordList;
+	vector<WordTranslations> wordList = manager->getWordLists();
 	consoleUtils.printTitle("Historial de búsquedas");
-	dictionaryAVL.inOrderTraversal(wordList);
 	for (size_t i = 0; i < wordList.size(); ++i) {
 		consoleUtils.writeLine("=== " + to_string(i + 1) + ". " + wordList[i].spanish + " ===");
 		consoleUtils.writeLine("Inglés: " + wordList[i].english);

@@ -84,11 +84,6 @@ void TranslateManager::loadWordsFromJSONFile(const fs::path& path)
     filePath.close();
 }
 
-DictionaryAVLTree TranslateManager::getDictionaryAVL() const
-{
-    return dictionary;
-}
-
 void TranslateManager::addWord(const WordTranslations& word, const fs::path& path)
 {
     dictionary.insert(word);
@@ -99,6 +94,16 @@ void TranslateManager::addWord(const WordTranslations& word, const fs::path& pat
     encryptedWord.italian = encryptionHelper.encrypter(word.italian);
     encryptedWord.german = encryptionHelper.encrypter(word.german);
     fileHandler.addTranslationEntry(encryptedWord, path);
+}
+
+WordTranslations* TranslateManager::findWord(const string& spanishWord) {
+    return dictionary.findWord(spanishWord);
+}
+
+vector<WordTranslations> TranslateManager::getWordLists() {
+    vector<WordTranslations> wordList;
+    dictionary.inOrderTraversal(wordList);
+    return wordList;
 }
 
 void TranslateManager::removeWord(const string& spanish, const fs::path& path)

@@ -7,11 +7,12 @@ class DictionaryAVLTree
 {
 public:
 	DictionaryAVLTree();
-	~DictionaryAVLTree(); // Destructor
+	~DictionaryAVLTree();
 
 	void insert(const WordTranslations& word);
 	void remove(const std::string& word);
 	void inOrderTraversal(std::vector<WordTranslations>& words) const;
+	WordTranslations* findWord(const std::string& spanishWord);
 	AVLNode* getRoot() const;
 
 private:

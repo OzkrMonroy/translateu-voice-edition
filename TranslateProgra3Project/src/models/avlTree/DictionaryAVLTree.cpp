@@ -30,6 +30,26 @@ AVLNode* DictionaryAVLTree::getRoot() const
 {
 	return root;
 }
+
+WordTranslations* DictionaryAVLTree::findWord(const std::string& spanishWord) {
+	AVLNode* current = root;
+
+	while (current != nullptr) {
+		if (spanishWord == current->word.spanish) {
+			return &current->word;
+		}
+		else if (spanishWord < current->word.spanish) {
+			current = current->left;
+		}
+		else {
+			current = current->right;
+		}
+	}
+
+	return nullptr;
+}
+
+
 // Private methods
 
 AVLNode* DictionaryAVLTree::insert(AVLNode* node, const WordTranslations& word)
