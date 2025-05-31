@@ -64,6 +64,16 @@ void TranslateManager::loadWordsFromJSONFile(const fs::path& path)
         {
             word.english = encryptionHelper.decrypter(fileHandler.getValueFromFile(currentLine));
         }
+        else if (currentLine.find("\"searchCount\"") != string::npos)
+        {
+            string countStr = fileHandler.getValueFromFile(currentLine);
+            try {
+                word.searchCount = stoi(countStr);
+            }
+            catch (...) {
+                word.searchCount = 1;
+            }
+        }
         else if (currentLine.find("}") != string::npos)
         {
             if (word.spanish.empty() || word.english.empty() ||
@@ -84,11 +94,6 @@ void TranslateManager::loadWordsFromJSONFile(const fs::path& path)
     filePath.close();
 }
 
-DictionaryAVLTree TranslateManager::getDictionaryAVL() const
-{
-    return dictionary;
-}
-
 void TranslateManager::addWord(const WordTranslations& word, const fs::path& path)
 {
     dictionary.insert(word);
@@ -101,12 +106,40 @@ void TranslateManager::addWord(const WordTranslations& word, const fs::path& pat
     fileHandler.addTranslationEntry(encryptedWord, path);
 }
 
+WordTranslations* TranslateManager::findWord(const string& spanishWord) {
+    return dictionary.findWord(spanishWord);
+}
+
+vector<WordTranslations> TranslateManager::getWordLists() {
+    vector<WordTranslations> wordList;
+    dictionary.inOrderTraversal(wordList);
+    return wordList;
+}
+
+vector<WordTranslations> TranslateManager::getTopSearchedWords() {
+    vector<WordTranslations> wordList = getWordLists();
+
+    std::sort(wordList.begin(), wordList.end(), [](const WordTranslations& a, const WordTranslations& b) {
+        return a.searchCount > b.searchCount;
+    });
+
+    if (wordList.size() > 5) {
+        wordList.resize(5);
+    }
+
+    return wordList;
+}
+
 void TranslateManager::removeWord(const string& spanish, const fs::path& path)
 {
     dictionary.remove(spanish);
-    fileHandler.writeAllFromTree(dictionary.getRoot(), path, true);
+    updateFileContent(path, true);
 }
 
 void TranslateManager::generateDecriptedFile(const fs::path& path) {
-    fileHandler.writeAllFromTree(dictionary.getRoot(), path, false);
+    updateFileContent(path, false);
 }
+
+void TranslateManager::updateFileContent(const fs::path& path, bool encrypt) {
+    fileHandler.writeAllFromTree(dictionary.getRoot(), path, encrypt);
+};

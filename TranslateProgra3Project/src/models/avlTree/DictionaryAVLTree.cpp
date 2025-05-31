@@ -21,15 +21,38 @@ void DictionaryAVLTree::remove(const string& word)
 	root = removeNode(root, word);
 }
 
-void DictionaryAVLTree::inOrderTraversal() const
+void DictionaryAVLTree::inOrderTraversal(vector<WordTranslations>& words) const
 {
-	inOrderTraversal(root);
+	inOrderTraversal(root, words);
 }
 
 AVLNode* DictionaryAVLTree::getRoot() const
 {
 	return root;
 }
+
+WordTranslations* DictionaryAVLTree::findWord(const std::string& spanishWord) {
+	std::string target = StringUtils::toLowerCase(spanishWord);
+	AVLNode* current = root;
+
+	while (current != nullptr) {
+		std::string currentWord = StringUtils::toLowerCase(current->word.spanish);
+
+		if (target == currentWord) {
+			return &current->word;
+		}
+		else if (target < currentWord) {
+			current = current->left;
+		}
+		else {
+			current = current->right;
+		}
+	}
+
+	return nullptr;
+}
+
+
 // Private methods
 
 AVLNode* DictionaryAVLTree::insert(AVLNode* node, const WordTranslations& word)
@@ -37,11 +60,14 @@ AVLNode* DictionaryAVLTree::insert(AVLNode* node, const WordTranslations& word)
 	if (!node)
 		return new AVLNode(word);
 
-	if (word.spanish < node->word.spanish)
+	std::string newWordLower = StringUtils::toLowerCase(word.spanish);
+	std::string currentWordLower = StringUtils::toLowerCase(node->word.spanish);
+
+	if (newWordLower < currentWordLower)
 	{
 		node->left = insert(node->left, word);
 	}
-	else if (word.spanish > node->word.spanish)
+	else if (newWordLower > currentWordLower)
 	{
 		node->right = insert(node->right, word);
 	}
@@ -54,20 +80,20 @@ AVLNode* DictionaryAVLTree::insert(AVLNode* node, const WordTranslations& word)
 
 	int balance = getBalanceFactor(node);
 
-	if (balance > 1 && word.spanish < node->left->word.spanish)
+	if (balance > 1 && newWordLower < StringUtils::toLowerCase(node->left->word.spanish))
 	{
 		return rotateRight(node);
 	}
-	if (balance < -1 && word.spanish > node->right->word.spanish)
+	if (balance < -1 && newWordLower > StringUtils::toLowerCase(node->right->word.spanish))
 	{
 		return rotateLeft(node);
 	}
-	if (balance > 1 && word.spanish > node->left->word.spanish)
+	if (balance > 1 && newWordLower > StringUtils::toLowerCase(node->left->word.spanish))
 	{
 		node->left = rotateLeft(node->left);
 		return rotateRight(node);
 	}
-	if (balance < -1 && word.spanish < node->right->word.spanish)
+	if (balance < -1 && newWordLower < StringUtils::toLowerCase(node->right->word.spanish))
 	{
 		node->right = rotateRight(node->right);
 		return rotateLeft(node);
@@ -75,6 +101,7 @@ AVLNode* DictionaryAVLTree::insert(AVLNode* node, const WordTranslations& word)
 
 	return node;
 }
+
 
 AVLNode* DictionaryAVLTree::removeNode(AVLNode* node, const string& word)
 {
@@ -191,18 +218,14 @@ AVLNode* DictionaryAVLTree::rotateLeft(AVLNode* unbalancedNode)
 	return newRoot;
 }
 
-void DictionaryAVLTree::inOrderTraversal(AVLNode* node) const
+void DictionaryAVLTree::inOrderTraversal(AVLNode* node, std::vector<WordTranslations>& words) const
 {
 	if (!node)
 		return;
 
-	inOrderTraversal(node->left);
-	console.writeLine("===Traducciones para: " + node->word.spanish + " ===");
-	console.writeLine("Inglés: " + node->word.english);
-	console.writeLine("Italiano: " + node->word.italian);
-	console.writeLine("Francés: " + node->word.french);
-	console.writeLine("Alemán: " + node->word.german);
-	inOrderTraversal(node->right);
+	inOrderTraversal(node->left, words);
+	words.push_back(node->word);
+	inOrderTraversal(node->right, words);
 }
 
 void DictionaryAVLTree::destroyTree(AVLNode* node)
