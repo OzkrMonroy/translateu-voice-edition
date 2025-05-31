@@ -103,6 +103,7 @@ void TranslationFileHandler::addTranslationEntry(const WordTranslations& transla
 	newEntry += "\n\t\t\t\"fr\": \"" + translation.french + "\",";
 	newEntry += "\n\t\t\t\"de\": \"" + translation.german + "\",";
 	newEntry += "\n\t\t\t\"en\": \"" + translation.english + "\"";
+	newEntry += ",\n\t\t\t\"searchCount\": " + std::to_string(translation.searchCount);
 	newEntry += "\n\t\t}";
 
 	content.insert(pos, newEntry);
@@ -162,6 +163,7 @@ void TranslationFileHandler::writeAllFromTree(AVLNode* root, const fs::path& fil
 			outFile << "\n\t\t\t\"fr\": \"" << translations.french << "\",";
 			outFile << "\n\t\t\t\"de\": \"" << translations.german << "\",";
 			outFile << "\n\t\t\t\"en\": \"" << translations.english << "\"";
+			outFile << ",\n\t\t\t\"searchCount\": " << node->word.searchCount;
 			outFile << "\n\t\t}";
 
 			self(self, node->right);

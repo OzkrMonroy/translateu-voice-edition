@@ -31,6 +31,7 @@ public:
     void addWord(const WordTranslations& word, const std::filesystem::path& path);
     void removeWord(const std::string& spanish, const std::filesystem::path& path);
     void generateDecriptedFile(const std::filesystem::path& path);
+    void updateFileContent(const std::filesystem::path& path, bool encrypt);
     WordTranslations* findWord(const std::string& spanishWord);
     std::vector<WordTranslations> getWordLists();
     std::vector<WordTranslations> getTopSearchedWords();

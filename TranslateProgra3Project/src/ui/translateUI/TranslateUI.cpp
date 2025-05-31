@@ -28,6 +28,8 @@ void TranslateUI::verifyWordAlreadyExists(string& spanishWord){
 		englishResult = wordResult->english;
 		italianResult = wordResult->italian;
 		germanResult = wordResult->german;
+		string fileName = currentUser.value().userFile + ".ly";
+		tManager->updateFileContent(fileName, true);
 		displayTranslateResult();
 	}
 	else {

@@ -151,6 +151,7 @@
     <ClCompile Include="src\utils\envLoader\EnvLoader.cpp" />
     <ClCompile Include="src\utils\paths\AppPaths.cpp" />
     <ClCompile Include="src\utils\ssmlBuilder\SSMLBuilder.cpp" />
+    <ClCompile Include="src\utils\stringUtils\StringUtils.cpp" />
     <ClCompile Include="src\utils\textSanatizer\TextSanatizer.cpp" />
     <ClCompile Include="src\utils\translationFileHandler\TranslationFileHandler.cpp" />
     <ClCompile Include="main.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="src\utils\envLoader\EnvLoader.h" />
     <ClInclude Include="src\utils\paths\AppPaths.h" />
     <ClInclude Include="src\utils\ssmlBuilder\SSMLBuilder.h" />
+    <ClInclude Include="src\utils\stringUtils\StringUtils.h" />
     <ClInclude Include="src\utils\textSanatizer\TextSanitizer.h" />
     <ClInclude Include="src\utils\translationFileHandler\TranslationFileHandler.h" />
   </ItemGroup>

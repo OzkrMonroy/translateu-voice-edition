@@ -2,6 +2,7 @@
 #include <vector>
 #include "../structs/AVLNode.h"
 #include "../../utils/consoleUtils/ConsoleUtils.h"
+#include "../../utils/stringUtils/StringUtils.h"
 
 class DictionaryAVLTree
 {
