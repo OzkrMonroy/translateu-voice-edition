@@ -1,19 +1,34 @@
+// TranslateManager.h
 #pragma once
 #include <iostream>
 #include <string>
+#include <filesystem>
 #include "../../models/avlTree/DictionaryAVLTree.h"
 #include "../../utils/TranslationFileHandler/TranslationFileHandler.h"
+#include "../../utils/encryptionHelper/EncrytionHelper.h"
 
 class TranslateManager
 {
 private:
-	DictionaryAVLTree dictionary;
-	TranslationFileHandler fileHandler;
+    static TranslateManager* instance;
+    DictionaryAVLTree dictionary;
+    TranslationFileHandler fileHandler;
+    EncrytionHelper encryptionHelper;
+
+    TranslateManager();
+    ~TranslateManager() = default;
+
+    TranslateManager(const TranslateManager&) = delete;
+    TranslateManager& operator=(const TranslateManager&) = delete;
+    TranslateManager(TranslateManager&&) = delete;
+    TranslateManager& operator=(TranslateManager&&) = delete;
 
 public:
-	TranslateManager();
-	void loadWordsFromJSONFile(std::filesystem::path path);
-	void displayWordsInDictionary();
-	void addWord(const WordTranslations& word, std::filesystem::path path);
-	void removeWord(const std::string& spanish, std::filesystem::path path);
+    static TranslateManager* getInstance();
+
+    void loadWordsFromJSONFile(const std::filesystem::path& path);
+    void addWord(const WordTranslations& word, const std::filesystem::path& path);
+    void removeWord(const std::string& spanish, const std::filesystem::path& path);
+    void generateDecriptedFile(const std::filesystem::path& path);
+    DictionaryAVLTree getDictionaryAVL() const;
 };

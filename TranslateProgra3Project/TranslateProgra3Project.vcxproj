@@ -142,7 +142,6 @@
     <ClCompile Include="src\models\user\UserModel.cpp" />
     <ClCompile Include="src\ui\auth\authentication\AuthenticationUI.cpp" />
     <ClCompile Include="src\ui\auth\userOptions\UserOptionsUI.cpp" />
-    <ClCompile Include="src\ui\deprecatedMainMenu\DeprecatedMainMenu.cpp" />
     <ClCompile Include="src\ui\translateUI\TranslateUI.cpp" />
     <ClCompile Include="src\ui\welcomeUI\WelcomeUI.cpp" />
     <ClCompile Include="src\utils\azureSpeechPlayer\AzureSpeechPlayer.cpp" />
@@ -160,6 +159,7 @@
     <ClInclude Include="src\controllers\authController\AuthController.h" />
     <ClInclude Include="src\controllers\deprecatedManager\TranslateManager.h" />
     <ClInclude Include="src\enums\SupportedLanguages.h" />
+    <ClInclude Include="src\maps\keyMaps.h" />
     <ClInclude Include="src\models\avlTree\DictionaryAVLTree.h" />
     <ClInclude Include="src\models\structs\AVLNode.h" />
     <ClInclude Include="src\models\structs\NewUser.h" />
@@ -168,7 +168,6 @@
     <ClInclude Include="src\models\user\UserModel.h" />
     <ClInclude Include="src\ui\auth\authentication\AuthenticationUI.h" />
     <ClInclude Include="src\ui\auth\userOptions\UserOptionsUI.h" />
-    <ClInclude Include="src\ui\deprecatedMainMenu\DeprecatedMainMenu.h" />
     <ClInclude Include="src\ui\translateUI\TranslateUI.h" />
     <ClInclude Include="src\ui\welcomeUI\WelcomeUI.h" />
     <ClInclude Include="src\utils\azureSpeechPlayer\AzureSpeechPlayer.h" />

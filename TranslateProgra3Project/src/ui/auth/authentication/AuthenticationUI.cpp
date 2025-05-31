@@ -56,8 +56,6 @@ void AuthenticationUI::login(bool &displayScreen){
 	getline(cin, password);
 
 	if (controller->login(userName, password)) {
-		consoleUtils.writeLine("Nombre de usuario: " + userName);
-		consoleUtils.writeLine("Contrase�a: " + password);
 		consoleUtils.writeLine("Iniciando sesion...");
 		consoleUtils.wait(1000);
 		UserOptionsUI userUI;

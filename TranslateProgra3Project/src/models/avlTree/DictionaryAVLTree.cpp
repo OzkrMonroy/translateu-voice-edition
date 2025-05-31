@@ -197,13 +197,11 @@ void DictionaryAVLTree::inOrderTraversal(AVLNode* node) const
 		return;
 
 	inOrderTraversal(node->left);
-	cout << "\n";
-	cout << "Español: " << node->word.spanish << " | ";
-	cout << "Inglés: " << node->word.english << " | ";
-	cout << "Italiano: " << node->word.italian << " | ";
-	cout << "Francés: " << node->word.french << " | ";
-	cout << "Alemán: " << node->word.german << " | " << endl;
-	cout << "\n";
+	console.writeLine("===Traducciones para: " + node->word.spanish + " ===");
+	console.writeLine("Inglés: " + node->word.english);
+	console.writeLine("Italiano: " + node->word.italian);
+	console.writeLine("Francés: " + node->word.french);
+	console.writeLine("Alemán: " + node->word.german);
 	inOrderTraversal(node->right);
 }
 

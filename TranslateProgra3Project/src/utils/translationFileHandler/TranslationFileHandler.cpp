@@ -5,7 +5,7 @@ namespace fs = filesystem;
 
 TranslationFileHandler::TranslationFileHandler()
 {
-	path_to_main = AppPaths::getDataDir();
+	path_to_main = AppPaths::getTranslationsDir();
 }
 
 ifstream TranslationFileHandler::getFile(fs::path path)
@@ -117,7 +117,7 @@ void TranslationFileHandler::addTranslationEntry(const WordTranslations& transla
 	outFile.close();
 }
 
-void TranslationFileHandler::writeAllFromTree(AVLNode* root, const fs::path& file_path)
+void TranslationFileHandler::writeAllFromTree(AVLNode* root, const fs::path& file_path, bool encrypt)
 {
 	std::string fullPath = (path_to_main / file_path).string();
 	fs::create_directories(fs::path(fullPath).parent_path());
@@ -148,12 +148,20 @@ void TranslationFileHandler::writeAllFromTree(AVLNode* root, const fs::path& fil
 				first = false;
 			}
 
+			WordTranslations translations;
+			if (encrypt) {
+				encryptWords(translations, node);
+			}
+			else {
+				noEncryptWords(translations, node);
+			}
+
 			outFile << "\n\t\t{";
-			outFile << "\n\t\t\t\"es\": \"" << node->word.spanish << "\",";
-			outFile << "\n\t\t\t\"it\": \"" << node->word.italian << "\",";
-			outFile << "\n\t\t\t\"fr\": \"" << node->word.french << "\",";
-			outFile << "\n\t\t\t\"de\": \"" << node->word.german << "\",";
-			outFile << "\n\t\t\t\"en\": \"" << node->word.english << "\"";
+			outFile << "\n\t\t\t\"es\": \"" << translations.spanish << "\",";
+			outFile << "\n\t\t\t\"it\": \"" << translations.italian << "\",";
+			outFile << "\n\t\t\t\"fr\": \"" << translations.french << "\",";
+			outFile << "\n\t\t\t\"de\": \"" << translations.german << "\",";
+			outFile << "\n\t\t\t\"en\": \"" << translations.english << "\"";
 			outFile << "\n\t\t}";
 
 			self(self, node->right);
@@ -163,4 +171,19 @@ void TranslationFileHandler::writeAllFromTree(AVLNode* root, const fs::path& fil
 
 	outFile << "\n\t]\n}";
 	outFile.close();
+}
+
+void TranslationFileHandler::encryptWords(WordTranslations& translations, AVLNode* node){
+	translations.spanish = encryptionHelper.encrypter(node->word.spanish);
+	translations.italian = encryptionHelper.encrypter(node->word.italian);
+	translations.french = encryptionHelper.encrypter(node->word.french);
+	translations.german = encryptionHelper.encrypter(node->word.german);
+	translations.english = encryptionHelper.encrypter(node->word.english);
+}
+void TranslationFileHandler::noEncryptWords(WordTranslations& translations, AVLNode* node) {
+	translations.spanish = node->word.spanish;
+	translations.italian = node->word.italian;
+	translations.french = node->word.french;
+	translations.german = node->word.german;
+	translations.english = node->word.english;
 }

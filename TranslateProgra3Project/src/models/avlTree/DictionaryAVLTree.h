@@ -1,5 +1,6 @@
 #pragma once
 #include "../structs/AVLNode.h"
+#include "../../utils/consoleUtils/ConsoleUtils.h"
 
 class DictionaryAVLTree
 {
@@ -14,6 +15,7 @@ public:
 
 private:
 	AVLNode* root;
+	ConsoleUtils console;
 
 	AVLNode* insert(AVLNode* node, const WordTranslations& word);
 	AVLNode* removeNode(AVLNode* node, const std::string& word);
