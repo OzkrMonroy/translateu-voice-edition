@@ -49,6 +49,7 @@ void UserOptionsUI::run()
 			break;
 		case 3:
 			topMostSearchedWords();
+			displayScreen = false;
 			break;
 		case 4: 
 			generateDecriptedFile();
@@ -121,7 +122,14 @@ void UserOptionsUI::deleteWord(vector<WordTranslations>& wordList) {
 
 void UserOptionsUI::topMostSearchedWords()
 {
-	cout << "-- Top de palabras más buscadas --\n";
+	consoleUtils.printTitle("Top 5 palabras más buscadas");
+	vector<WordTranslations> topWords = manager->getTopSearchedWords();
+	int index = 1;
+	for (WordTranslations word : topWords) {
+		consoleUtils.writeLine(to_string(index++) + ". " + word.spanish + " (buscada " + to_string(word.searchCount) + " veces)");
+	}
+	consoleUtils.waitForEnter();
+	run();
 }
 
 void UserOptionsUI::generateDecriptedFile() {

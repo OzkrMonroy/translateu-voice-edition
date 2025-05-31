@@ -106,6 +106,20 @@ vector<WordTranslations> TranslateManager::getWordLists() {
     return wordList;
 }
 
+vector<WordTranslations> TranslateManager::getTopSearchedWords() {
+    vector<WordTranslations> wordList = getWordLists();
+
+    std::sort(wordList.begin(), wordList.end(), [](const WordTranslations& a, const WordTranslations& b) {
+        return a.searchCount > b.searchCount;
+    });
+
+    if (wordList.size() > 5) {
+        wordList.resize(5);
+    }
+
+    return wordList;
+}
+
 void TranslateManager::removeWord(const string& spanish, const fs::path& path)
 {
     dictionary.remove(spanish);

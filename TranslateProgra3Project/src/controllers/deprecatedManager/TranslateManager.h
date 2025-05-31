@@ -30,7 +30,8 @@ public:
     void loadWordsFromJSONFile(const std::filesystem::path& path);
     void addWord(const WordTranslations& word, const std::filesystem::path& path);
     void removeWord(const std::string& spanish, const std::filesystem::path& path);
+    void generateDecriptedFile(const std::filesystem::path& path);
     WordTranslations* findWord(const std::string& spanishWord);
     std::vector<WordTranslations> getWordLists();
-    void generateDecriptedFile(const std::filesystem::path& path);
+    std::vector<WordTranslations> getTopSearchedWords();
 };

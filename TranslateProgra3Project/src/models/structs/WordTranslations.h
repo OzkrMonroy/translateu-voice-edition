@@ -10,7 +10,7 @@ struct WordTranslations
 	std::string french;
 	std::string german;
 	std::string english;
-	int searchCount = 0;
+	int searchCount = 1;
 };
 
 #endif // WORDTRANSLATIONS_H
