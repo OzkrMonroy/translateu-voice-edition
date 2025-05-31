@@ -9,18 +9,17 @@
 #include "../../controllers/authController/AuthController.h"
 #include "../../models/structs/User.h"
 #include "../../models/structs/WordTranslations.h"
-#include "../../utils/paths/AppPaths.h"
 
 class WelcomeUI;
 class UserOptionsUI;
 
 class TranslateUI {
 private:
-	TranslateManager tManager;
+	TranslateManager* tManager;
+	AuthController* authController;
 	ConsoleUtils consoleUtils;
 	AzureTranslator translator;
 	AzureSpeechPlayer player;
-	AuthController* authController;
 	std::string wordToTranslate;
 	std::string englishResult;
 	std::string frenchResult;

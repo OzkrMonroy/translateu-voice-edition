@@ -68,7 +68,7 @@ bool UserModel::addUser(const NewUser& user) {
 }
 
 std::optional<User> UserModel::getUserByUsername(const std::string& username) {
-    return findUserByQuery("SELECT id, name, username FROM users WHERE username = ?", { username });
+    return findUserByQuery("SELECT id, name, username, userFile FROM users WHERE username = ?", { username });
 }
 
 std::optional<User> UserModel::getUser(const std::string& username, const std::string& password) {
